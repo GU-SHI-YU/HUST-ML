@@ -5,10 +5,12 @@ Created on Thu Apr  9 09:00:05 2020
 @author: Gu Shiyu
 """
 
+import datetime
 from numpy import *
 import numpy as np
 from os import listdir
 import struct
+import matplotlib.pyplot as plt
 
 #读取图片
 def read_image(file_name):
@@ -44,8 +46,6 @@ def KNN(test_data, dataSet, labels, k):
     dataSetSize = dataSet.shape[0]#dataSet.shape[0]表示的是读取矩阵第一维度的长度，代表行数
     distance1 = np.tile(test_data, (dataSetSize)).reshape((60000,784))-dataSet
     distance2 = ((distance1**2).sum(axis=1))**0.5
-    #distance3 = distance2.sum(axis=1)#矩阵每行相加
-    #distances4 = distance3**0.5#欧氏距离计算结束
     sortedDistIndicies = distance2.argsort() #返回从小到大排序的索引
     classCount=np.zeros((10), np.int32)#10是代表10个类别
     for i in range(k): #统计前k个数据类的数量
@@ -73,18 +73,20 @@ def test_KNN():
     testRatio = 1  # 取数据集的前0.1为测试数据,这个参数比重可以改变
     test_row=test_x.shape[0]
     testNum = int(test_row * testRatio)
-    errorCount = 0  # 判断错误的个数
+    
+    errorCount = 0 # 判断错误的个数
     for i in range(testNum):
-        result = KNN(test_x[i], train_x, train_y, 30)
-        print(result, test_y[i])
+        result = KNN(test_x[i], train_x, train_y, 5)
         if result != test_y[i]:
             errorCount += 1.0# 如果mnist验证集的标签和本身标签不一样，则出错
-    error_rate = errorCount / float(testNum)  # 计算出错率
-    acc = 1.0 - error_rate
-    print(errorCount)
-    print("\nthe total number of errors is: %d" % errorCount)
-    print("\nthe total error rate is: %f" % (error_rate))
+        if(i % 100 == 0):
+            print(i)
+    error_rate = errorCount / testNum  # 计算出错率
+    acc = 1 - error_rate
     print("\nthe total accuracy rate is: %f" % (acc))
 
 if __name__ == "__main__":
+    begin = datetime.datetime.now()
     test_KNN()
+    end = datetime.datetime.now()
+    print (end - begin).seconds
