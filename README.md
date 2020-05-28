@@ -4,8 +4,6 @@
 
 开发环境为Spyder+Jupyterbook，在Spyder开发环境下实现了基于Python3的KNN算法，之后在Google Cloud Platform上搭建了Jupyterbook服务器，并在Jupyterbook上实现了基于sklearn的KNN算法。
 
-前往[Jupyterbook](http://35.201.136.176:8888/)
-
 接下来简单总结本次实验的成果
 
 ### 1. 使用Python3实现的KNN算法和使用sklearn实现的KNN算法的效率比较 ###
